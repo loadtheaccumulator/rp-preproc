@@ -1,0 +1,19 @@
+{
+  "rp_preproc" : {
+    "service_url": "http://localhost:8000/",
+    "payload_dir": "resources/examples/payload_example_small"
+  },
+  "reportportal": {
+    "host_url": "https://rp-ea.cloud.paas.psi.redhat.com/",
+    "api_token": "2f466437-b13b-4a5c-9a50-d148e29ee8f1",
+    "project": "superadmin_personal",
+    "merge_launches": true,
+    "simple_xml": false,
+    "auto_dashboard": true,
+    "launch": {
+      "name": "CCIT test run example from config (local)",
+      "description": "This is an example description from config",
+      "tags": ["example_conf_tag1", "example_conf_tag2", "example_conf_tag3"]
+    }
+  }
+}
