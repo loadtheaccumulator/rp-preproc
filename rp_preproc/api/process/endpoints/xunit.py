@@ -39,7 +39,8 @@ class XunitCollection(Resource):
         url = '{}/{}/launch/import'.format(args.endpoint, args.project)
         files = {'file': open(outfile, 'rb')}
         response = requests.post(url=url, data={"mysubmit": "Go"},
-                                 files=files, headers=session.headers)
+                                 files=files, headers=session.headers,
+                                 verify=False)
 
         idregex = re.match('.*id = (.*) is.*', response.json()['msg'])
 
