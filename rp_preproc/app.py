@@ -61,11 +61,11 @@ def initialize_app(flask_app):
 
 
 def main():
+#    initialize_app(app)
     log.info('>>>>> Starting development server at '
              'http://{}/api/ <<<<<'.format(app.config['SERVER_NAME']))
-    app.run(host='127.0.0.1', debug=settings.FLASK_DEBUG)
+    app.run(host='0.0.0.0', debug=settings.FLASK_DEBUG)
 
-#initialize_app(app)
 
 if __name__ == "__main__":
     main()
