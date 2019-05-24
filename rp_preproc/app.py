@@ -13,7 +13,7 @@ logging_conf_path = os.path.normpath(os.path.join(os.path.dirname(__file__),
 logging.config.fileConfig(logging_conf_path)
 log = logging.getLogger(__name__)
 
-app.config['SERVER_NAME'] = settings.FLASK_SERVER_NAME
+#app.config['SERVER_NAME'] = settings.FLASK_SERVER_NAME
 app.config['SWAGGER_UI_DOC_EXPANSION'] = \
    settings.RESTPLUS_SWAGGER_UI_DOC_EXPANSION
 app.config['RESTPLUS_VALIDATE'] = settings.RESTPLUS_VALIDATE
@@ -31,14 +31,12 @@ api.add_namespace(xunit_namespace)
 app.register_blueprint(blueprint)
 
 
-
-
 @app.route('/hello')
 def hello():
     return 'hello, world'
 
 def configure_app(flask_app):
-    flask_app.config['SERVER_NAME'] = settings.FLASK_SERVER_NAME
+    #flask_app.config['SERVER_NAME'] = settings.FLASK_SERVER_NAME
     flask_app.config['SWAGGER_UI_DOC_EXPANSION'] = \
         settings.RESTPLUS_SWAGGER_UI_DOC_EXPANSION
     flask_app.config['RESTPLUS_VALIDATE'] = settings.RESTPLUS_VALIDATE
@@ -64,7 +62,7 @@ def main():
 #    initialize_app(app)
     log.info('>>>>> Starting development server at '
              'http://{}/api/ <<<<<'.format(app.config['SERVER_NAME']))
-    app.run(host='0.0.0.0', debug=settings.FLASK_DEBUG)
+    app.run(host='0.0.0.0', port=8080, debug=settings.FLASK_DEBUG)
 
 
 if __name__ == "__main__":
