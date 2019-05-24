@@ -11,7 +11,7 @@ from rp_preproc.api.restplus import api
 
 log = logging.getLogger(__name__)
 
-ns = api.namespace('xunit',
+ns = api.namespace('process/xunit',
                    description='Operations related to importing xunit XML')
 
 
