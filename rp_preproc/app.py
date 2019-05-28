@@ -13,7 +13,6 @@ logging_conf_path = os.path.normpath(os.path.join(os.path.dirname(__file__),
 logging.config.fileConfig(logging_conf_path)
 log = logging.getLogger(__name__)
 
-#app.config['SERVER_NAME'] = settings.FLASK_SERVER_NAME
 app.config['SWAGGER_UI_DOC_EXPANSION'] = \
    settings.RESTPLUS_SWAGGER_UI_DOC_EXPANSION
 app.config['RESTPLUS_VALIDATE'] = settings.RESTPLUS_VALIDATE
@@ -36,7 +35,6 @@ def hello():
     return 'hello, world'
 
 def configure_app(flask_app):
-    #flask_app.config['SERVER_NAME'] = settings.FLASK_SERVER_NAME
     flask_app.config['SWAGGER_UI_DOC_EXPANSION'] = \
         settings.RESTPLUS_SWAGGER_UI_DOC_EXPANSION
     flask_app.config['RESTPLUS_VALIDATE'] = settings.RESTPLUS_VALIDATE
