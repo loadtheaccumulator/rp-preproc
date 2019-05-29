@@ -83,8 +83,8 @@ class XunitImportExample(Resource):
         """
         Send an example xunit file to test ReportPortal import.
         """
-        xml_file = '../resources/example_xunit.xml'
-        uploaded_file.save(xml_file)
+        xml_file = 'resources/example_xunit.xml'
+        args = example_parser.parse_args()
 
         outfile = '/tmp/my_results.zip'
         with ZipFile(outfile, 'w') as zipit:
