@@ -78,6 +78,7 @@ class XunitZipped(Resource):
 @ns.route('/example')
 class XunitCollection(Resource):
 
+    @api_expect(example_parser)
     def get(self):
         """
         Send an example xunit file to test ReportPortal import.
