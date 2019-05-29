@@ -6,7 +6,7 @@ from zipfile import ZipFile
 from flask import request
 from flask_restplus import Resource
 from rp_preproc.api.process.serializers import xunit
-from rp_preproc.api.process.parsers import upload_parser
+from rp_preproc.api.process.parsers import upload_parser, example_parser
 from rp_preproc.api.restplus import api
 
 log = logging.getLogger(__name__)
@@ -73,3 +73,33 @@ class XunitZipped(Resource):
 
         return {'api uri': url, 'project': args.project,
                 'launch id': idregex.group(1)}, 201
+
+
+@ns.route('/example')
+class XunitCollection(Resource):
+
+    def get(self):
+        """
+        Send an example xunit file to test ReportPortal import.
+        """
+        xml_file = '../../../resources/example_xunit.xml'
+        uploaded_file.save(xml_file)
+
+        outfile = '/tmp/my_results.zip'
+        with ZipFile(outfile, 'w') as zipit:
+            zipit.write(xml_file)
+
+        session = requests.Session()
+        session.headers["Authorization"] = "bearer {0}".format(args.api_token)
+
+        url = '{}/{}/launch/import'.format(args.endpoint, args.project)
+        files = {'file': open(outfile, 'rb')}
+        response = requests.post(url=url, data={"mysubmit": "Go"},
+                                 files=files, headers=session.headers,
+                                 verify=False)
+
+        idregex = re.match('.*id = (.*) is.*', response.json()['msg'])
+
+        return {'api uri': url, 'project': args.project,
+                'launch id': idregex.group(1)}, 201
+
