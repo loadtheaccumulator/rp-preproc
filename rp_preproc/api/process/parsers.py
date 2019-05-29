@@ -12,6 +12,6 @@ upload_parser.add_argument('file', location='files',
                            type=FileStorage, required=True)
 
 example_parser = api.parser()
-upload_parser.add_argument('endpoint', location='form', required=True)
-upload_parser.add_argument('api_token', location='form', required=True)
-upload_parser.add_argument('project', location='form', required=True)
+example_parser.add_argument('endpoint', location='form', required=True)
+example_parser.add_argument('api_token', location='form', required=True)
+example_parser.add_argument('project', location='form', required=True)
