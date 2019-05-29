@@ -79,7 +79,7 @@ class XunitImportZipped(Resource):
 class XunitImportExample(Resource):
 
     @api.expect(example_parser)
-    def get(self):
+    def post(self):
         """
         Send an example xunit file to test ReportPortal import.
         """
