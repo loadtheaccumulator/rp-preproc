@@ -16,7 +16,7 @@ ns = api.namespace('process/xunit',
 
 
 @ns.route('/')
-class XunitCollection(Resource):
+class XunitImport(Resource):
 
     @api.expect(upload_parser)
     def post(self):
@@ -49,7 +49,7 @@ class XunitCollection(Resource):
 
 
 @ns.route('/zipped')
-class XunitZipped(Resource):
+class XunitImportZipped(Resource):
 
     @api.expect(upload_parser)
     def post(self):
@@ -76,7 +76,7 @@ class XunitZipped(Resource):
 
 
 @ns.route('/example')
-class XunitCollection(Resource):
+class XunitImportExample(Resource):
 
     @api_expect(example_parser)
     def get(self):
