@@ -23,12 +23,10 @@ from rp_preproc.libs.reportportal import Launch, RpLog
 
 class XunitXML:
     '''Class for processing the xUnit XML file for ReportPortal'''
-    def __init__(self, rportal, name=None, configs=None, config=None,
-                 xml_data=None):
+    def __init__(self, rportal, name=None, configs=None, xml_data=None):
         self.rportal = rportal
         self.name = name
         self._configs = configs
-        self.config = config
         self.xml_data = xml_data
 
     @staticmethod
