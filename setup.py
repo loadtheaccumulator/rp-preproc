@@ -42,6 +42,6 @@ setup(
                 },
     install_requires=['flask-restplus==0.9.2', 'gunicorn==19.8.*',
                       'xmltodict', 'reportportal_client',
-                      ('glusto@git+ssh://git@github.com/'
-                       'loadtheaccumulator/glusto@python3_port4#egg=glusto')],
+                      ('glusto@git+git://github.com/loadtheaccumulator/'
+                       'glusto.git@python3_port4#egg=glusto')],
 )
