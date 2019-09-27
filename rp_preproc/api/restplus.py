@@ -22,7 +22,7 @@ from rp_preproc import settings
 
 log = logging.getLogger(__name__)
 
-api = Api(version='0.0.9', title='ReportPortal PreProc API',
+api = Api(version='0.1', title='ReportPortal PreProc API',
           description=('A REST API to pre-process xUnit XML '
                        'for import into ReportPortal'))
 

@@ -51,17 +51,8 @@ class XunitImport(Resource):
 
         preproc = PreProcService(args)
         response = preproc.process()
+        preproc.cleanup_tmp()
 
         print('IMPORT COMPLETE: {}'.format(response))
 
-        '''
-        if os.path.exists(tmp_dir):
-            shutil.rmtree(tmp_dir)
-        '''
-
         return response
-
-# TODO: remove temporary files
-# TODO: return some valid info
-# TODO: add error checks
-# TODO: add tags

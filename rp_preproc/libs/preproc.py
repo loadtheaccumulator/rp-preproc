@@ -43,6 +43,13 @@ class PreProc:
         """Configs arg"""
         return self._configs
 
+    def __init__(self, args):
+        # read config files and update g.config attributes
+        self._args = args
+        self._config_file = self.args.get('config_file', None)
+        g.log.debug('ARGS: %s', self._args)
+        self._configs = None
+
     @staticmethod
     def get_uuid():
         """Unique ID helper"""
@@ -93,13 +100,6 @@ class PreProc:
 
         return results_dir
 
-    def __init__(self, args):
-        # read config files and update g.config attributes
-        self._args = args
-        self._config_file = self.args.get('config_file', None)
-        g.log.debug('ARGS: %s', self._args)
-        self._configs = None
-
     def process(self):
         """Process the files in the payload for importing into ReportPortal"""
         g.log.debug('PREPROCESSING STARTED')
@@ -124,10 +124,8 @@ class PreProc:
                 else:
                     g.log.debug('Parsing XML...')
                     xml_data = xmltodict.parse(xmlfd.read())
-                    # FIXME: don't need to send both configs and config
                     xunit_xml = XunitXML(rportal, name=filename_base,
                                          configs=self._configs,
-                                         config=self.configs.rp_config,
                                          xml_data=xml_data)
                     response = xunit_xml.process()
                     responses.append(response)
@@ -238,17 +236,18 @@ class PreProcService(PreProc):
 
         # generate a uuid for temp use
         rppp_uuid = uuid.uuid1()
-        tmp_dir = os.path.join('/tmp', 'rppp_{}'.format(rppp_uuid.hex))
-        os.mkdir(tmp_dir)
+        self.tmp_dir = os.path.join('/tmp', 'rppp_{}'.format(rppp_uuid.hex))
+        os.mkdir(self.tmp_dir)
 
         # handle payload
         uploaded_payload_file = self._args.get('payload_file', None)
         g.log.debug('uploaded_payload_file: %s', uploaded_payload_file)
-        tmp_payload_dir = os.path.join(tmp_dir, 'uploaded_rp_preproc_results')
+        tmp_payload_dir = os.path.join(self.tmp_dir,
+                                       'uploaded_rp_preproc_results')
         if uploaded_payload_file is not None:
             tmp_payload_filepath = \
                 PreProcService.save_uploaded_file(uploaded_payload_file,
-                                                  tmp_dir)
+                                                  self.tmp_dir)
             PreProcService.untar_file(tmp_payload_filepath, tmp_payload_dir)
 
         self.configs.payload_dir = tmp_payload_dir
@@ -298,3 +297,9 @@ class PreProcService(PreProc):
         config = json.loads(config_json)
 
         return config
+
+    def cleanup_tmp(self):
+        """Cleanup temp dirs/files"""
+        # remove temp client dir
+        if os.path.exists(self.tmp_dir):
+            shutil.rmtree(self.tmp_dir)
