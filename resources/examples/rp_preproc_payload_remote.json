@@ -1,13 +1,12 @@
 {
   "rp_preproc" : {
-    "service_url": "http://rp-preproc-downstream-ccit-reportportal.cloud.paas.psi.redhat.com/",
-    "urlx": "http://rp-ea-preproc.cloud.paas.psi.redhat.com/",
+    "service_url": "http://rp-preproc-git-rp-preproc.apps-crc.testing/"
     "payload_dir": "resources/examples/payload_example_large"
   },
   "reportportal": {
-    "host_url": "https://rp-ea.cloud.paas.psi.redhat.com",
-    "api_token": "2f466437-b13b-4a5c-9a50-d148e29ee8f1",
-    "project": "superadmin_personal",
+    "host_url": "https://web.demo.reportportal.io",
+    "api_token": "<API_TOKEN>",
+    "project": "default_personal",
     "merge_launches": true,
     "simple_xml": false,
     "auto_dashboard": true,

@@ -5,7 +5,7 @@ Pre-processor for ReportPortal
 ### Install via pip
     $ virtualenv -p `which python3` venv
     $ source venv/bin/activate
-    (venv) $ pip install git+https://gitlab.cee.redhat.com/ccit/reportportal/rc_preproc.git#preproc1
+    (venv) $ pip install git+https://github.com/loadtheaccumulator/rc_preproc.git#preprocX
 
 
 ## Develop during alpha, beta
