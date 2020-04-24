@@ -40,8 +40,9 @@ setup(
             'rp_preproc = rp_preproc.main:main',
             ]
                 },
-    install_requires=['flask-restplus==0.9.2', 'gunicorn==19.8.*',
-                      'xmltodict', 'reportportal_client',
-                      ('glusto@git+git://github.com/loadtheaccumulator/'
+    dependency_links=['http://github.com/loadtheaccumulator/glusto/tarball/python3_port4#egg=glusto'],
+    install_requires=['Werkzeug==0.16.1', 'flask-restplus==0.9.2',
+                      'gunicorn==19.8.*', 'xmltodict', 'reportportal_client~=3.0',
+                      ('glusto@git+https://github.com/loadtheaccumulator/'
                        'glusto.git@python3_port4#egg=glusto')],
 )
