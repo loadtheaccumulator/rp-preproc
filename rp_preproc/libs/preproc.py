@@ -236,8 +236,9 @@ class PreProcService(PreProc):
 
         # generate a uuid for temp use
         rppp_uuid = uuid.uuid1()
-        self.tmp_dir = os.path.join('/tmp', 'rppp_{}'.format(rppp_uuid.hex))
-        os.mkdir(self.tmp_dir)
+        tempdir = os.environ.get('RP_TEMPDIR', "/tmp")
+        self.tmp_dir = os.path.join(tempdir, 'rppp_{}'.format(rppp_uuid.hex))
+        os.makedirs(self.tmp_dir)
 
         # handle payload
         uploaded_payload_file = self._args.get('payload_file', None)

@@ -18,7 +18,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='rp-preproc',
-    version='0.1',
+    version='0.1.2',
     description=('REST API and client for pre-processing XML data before '
                  'import into ReportPortal'),
     url='https://github.com/loadtheaccumulator/rp-preproc',
@@ -39,10 +39,12 @@ setup(
         'console_scripts': [
             'rp_preproc = rp_preproc.main:main',
             ]
-                },
-    dependency_links=['http://github.com/loadtheaccumulator/glusto/tarball/python3_port4#egg=glusto'],
+    },
+    dependency_links=[('http://github.com/loadtheaccumulator/glusto/tarball/'
+                       'python3_port4#egg=glusto')],
     install_requires=['Werkzeug==0.16.1', 'flask-restplus==0.9.2',
-                      'gunicorn==19.8.*', 'xmltodict', 'reportportal_client~=3.0',
+                      'gunicorn==19.8.*', 'xmltodict',
+                      'reportportal_client~=3.0',
                       ('glusto@git+https://github.com/loadtheaccumulator/'
                        'glusto.git@python3_port4#egg=glusto')],
 )
