@@ -21,6 +21,8 @@ from rp_preproc.api.restplus import api
 
 
 # process/payload
+# pylint: disable=invalid-name
+#         reviewed and disabled
 import_parser_payload = api.parser()
 import_parser_payload.add_argument('config_file', location='files',
                                    type=FileStorage, required=True,

@@ -59,8 +59,8 @@ def run(args):
         g.log.info("Sending to RP PreProc...")
         rp_return_code = 1
 
-        if (preproc.configs.fqpath is not None
-                and preproc.configs.payload_dir is not None):
+        if (preproc.configs.fqpath is not None and
+                preproc.configs.payload_dir is not None):
             g.log.debug('Sending to rp_preproc service')
             g.log.debug('PAYLOAD_DIR: %s', preproc.configs.payload_dir)
             payload = Payload(preproc.configs.fqpath,
@@ -161,6 +161,8 @@ def main():
     return return_code
 
 
+# pylint: disable=invalid-name
+#         reviewed and disabled
 if __name__ == '__main__':
     exitcode = main()
 

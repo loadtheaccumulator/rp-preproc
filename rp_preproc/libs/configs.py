@@ -23,6 +23,9 @@ from glusto.core import Glusto as g
 # Define sentinel object NULL constant
 NULL = object()
 
+
+# pylint: disable=too-many-instance-attributes
+#         reviewed and disabled (jdh)
 class Configs:
     """Configuration class to handle config file, args, env tasks.
     Order of precedence (ordoprec) cli > envvars > config > defaults
@@ -50,7 +53,7 @@ class Configs:
             self._config = self._read_fqpath(self.fqpath)
         g.log.debug("Configs.init(): CONFIG: %s", self._config)
 
-    #PROPERTIES
+    # PROPERTIES
     # using these to handle order of presidence of config, args, etc.
     @property
     def args(self):

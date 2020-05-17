@@ -93,12 +93,17 @@ class XunitXML:
         return {'launch_id': launch_id}, 200
 
 
+# pylint: disable=too-few-public-methods
+# TODO: remove pylint disable when this is built out
+# TODO: build this out
 class TestSuites:
     """Class to handle multiple TestSuites in an XML file"""
     def __init__(self, rportal, xml_name):
         pass
 
 
+# pylint: disable=too-many-instance-attributes
+#         reviewed and disabled
 class TestSuite:
     """Class to handle TestSuite xUnit specific items"""
     def __init__(self, rportal, xml_name, testsuite):
@@ -139,7 +144,6 @@ class TestCase:
         self.tc_classname = testcase.get('@classname', '')
         self.tc_name = testcase.get('@name', testcase.get('@id', None))
         self.tc_time = testcase.get('@time')
-        #self.tc_attach_dir = '{}.{}'.format(self.tc_classname, self.tc_name)
         self.description = '{} time: {}'.format(self.tc_name, self.tc_time)
         self.status = 'PASSED'
         self.issue = None
@@ -147,7 +151,6 @@ class TestCase:
 
     def start(self):
         """Start a testcase in ReportPortal"""
-        #g.log.debug('.', end='', flush=True)
         self.service.start_test_item(name=self.tc_name[:255],
                                      description=self.description,
                                      tags=['testtag1'],

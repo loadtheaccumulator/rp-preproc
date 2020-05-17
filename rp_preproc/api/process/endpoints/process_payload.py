@@ -25,12 +25,17 @@ from rp_preproc.api.process.parsers import import_parser_payload
 from rp_preproc.api.restplus import api
 from rp_preproc.libs.preproc import PreProcService
 
+
 # TODO: get rid of this if possible
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+# pylint: disable=invalid-name
+#         reviewed and disabled
 log = logging.getLogger(__name__)
 
 description = 'Operations related to importing results into ReportPortal'
 payload_namespace = api.namespace('process/payload', description=description)
+
 
 @payload_namespace.route('/')
 class XunitImport(Resource):

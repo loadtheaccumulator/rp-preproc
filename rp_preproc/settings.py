@@ -1,4 +1,5 @@
-# Flask settings
+"""Flask settings file"""
+
 FLASK_DEBUG = False  # Do not use debug mode in production
 
 # Flask-Restplus settings

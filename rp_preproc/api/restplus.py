@@ -20,6 +20,8 @@ from flask_restplus import Api
 from rp_preproc import settings
 
 
+# pylint: disable=invalid-name
+#         reviewed and disabled
 log = logging.getLogger(__name__)
 
 api = Api(version='0.1.2', title='ReportPortal PreProc API',
@@ -27,6 +29,8 @@ api = Api(version='0.1.2', title='ReportPortal PreProc API',
                        'for import into ReportPortal'))
 
 
+# pylint: disable=inconsistent-return-statements, unused-argument
+#         reviewed and disabled until additional error handlers are added
 @api.errorhandler
 def default_error_handler(e):
     """Default error handler"""

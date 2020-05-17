@@ -26,6 +26,7 @@ from rp_preproc.api.process.endpoints.process_payload import payload_namespace
 from rp_preproc.api.restplus import api
 
 
+# pylint: disable=invalid-name
 app = Flask(__name__)
 logging_conf_path = os.path.normpath(os.path.join(os.path.dirname(__file__),
                                                   '../logging.conf'))
@@ -62,7 +63,7 @@ def configure_app(flask_app):
 def main():
     """This is main()"""
     log.info('>>>>> Starting development server at '
-             'http://{}/api/ <<<<<'.format(app.config['SERVER_NAME']))
+             'http://%s/api/ <<<<<', app.config['SERVER_NAME'])
     app.run(host='0.0.0.0', port=8080, debug=settings.FLASK_DEBUG)
 
 

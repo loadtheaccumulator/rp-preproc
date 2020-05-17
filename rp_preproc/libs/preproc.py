@@ -100,6 +100,8 @@ class PreProc:
 
         return results_dir
 
+    # pylint: disable=too-many-locals
+    # TODO: break this up into two or three smaller methods and remove disable
     def process(self):
         """Process the files in the payload for importing into ReportPortal"""
         g.log.debug('PREPROCESSING STARTED')
@@ -130,22 +132,13 @@ class PreProc:
                     response = xunit_xml.process()
                     responses.append(response)
 
-        #return_obj["responses"] = responses
-
         # Merge launches
         launch_list = rportal.launches.list
         if len(result_file_list) > 1:
-            #print('DO THE MERGE ON: {}'.format(self.configs.merge_launches))
-            #print(type(self.configs.merge_launches))
             if self.configs.merge_launches:
-                #launch_list = rportal.launches.list
                 g.log.debug('launches: %s', launch_list)
                 merged_launch_id = rportal.launches.merge(merge_type='DEEP')
                 return_obj["merged_launch"] = merged_launch_id
-
-                #if merged_launch_id is None:
-                #    # the merge failed. return launch list with error
-                #    pass
         else:
             if self.configs.merge_launches:
                 g.log.debug('MERGE SKIPPED: Cannot merge a single file')
@@ -162,7 +155,8 @@ class PreProc:
         g.log.debug('RETURN OBJECT: %s', return_obj)
         return return_obj
 
-    def auto_create_dashboard(self, rportal):
+    @staticmethod
+    def auto_create_dashboard(rportal):
         """Auto-create a default dashboard with basic widgets and a filter"""
         dashboard_obj = {}
         widgets = []
@@ -205,7 +199,6 @@ class PreProc:
 
         # Get the dashboard URL
         dashboard_obj['url'] = rp_dashboard.url
-        #return_obj['auto_dashboard'] = dashboard_obj
 
         g.log.debug('DASHBOARD OBJECT: %s', dashboard_obj)
         return dashboard_obj

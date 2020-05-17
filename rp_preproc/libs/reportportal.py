@@ -33,6 +33,8 @@ from reportportal_client import ReportPortalService
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
+# pylint: disable=too-many-instance-attributes, too-many-arguments
+#         reviewed and disabled
 class ReportPortal:
     """ReportPortal class to assist with RP API calls"""
     def __init__(self, config, endpoint=None, api_token=None, project=None,
@@ -138,8 +140,6 @@ class ReportPortal:
 
         session = requests.Session()
         session.headers["Authorization"] = "bearer {0}".format(self.api_token)
-
-
         session.headers["Content-type"] = "application/json"
         session.headers["Accept"] = "application/json"
         response = session.put(url, data=json.dumps(put_data),
@@ -179,7 +179,6 @@ class ReportPortal:
 
     def api_post(self, api_path, post_data=None, filepath=None, verify=False):
         """POST to the ReportPortal API"""
-        #url = '{}api/v1/{}/{}'.format(self.endpoint, self.project, api_path)
         url = posixpath.join(self.endpoint, 'api/v1/', self.project, api_path)
         g.log.debug('url: %s', url)
 
@@ -207,7 +206,6 @@ class ReportPortal:
         api_path = 'launch/import'
 
         response = self.api_post(api_path, filepath=outfile)
-        #response_json = response.json()
 
         try:
             response_json = response.json()
@@ -269,7 +267,6 @@ class Launches:
             return_response = response.text
             g.log.debug('r.text: %s', return_response)
 
-        #return response.status_code
         return None
 
 
@@ -428,10 +425,10 @@ class RpLog:
         """Add an attachment to a testcase in ReportPortal"""
         filename = os.path.basename(filepath)
         g.log.debug('Attaching %s', filepath)
-        with open(filepath, "rb") as fh:
+        with open(filepath, "rb") as file_handle:
             attachment = {
                 "name": filename,
-                "data": fh.read(),
+                "data": file_handle.read(),
                 "mime": guess_type(filepath)[0]
             }
             self.service.log(str(int(time.time() * 1000)),
@@ -553,7 +550,6 @@ class Filter:
             return_response = response.text
             g.log.debug('r.text: %s', return_response)
 
-        #return response.status_code
         return None
 
 
@@ -742,7 +738,6 @@ class Dashboard:
         superadmin_personal/filter?filter.eq.name=<name>
         """
         api_path = 'dashboard/shared'
-        #get_string = 'search?term=={}-table'.format(self._name)
         response = self._rportal.api_get(api_path)
         response_json = response.json()
         g.log.debug('GET DASHBOARD ID BY NAME: %s', response_json)
@@ -843,5 +838,4 @@ class Dashboard:
 
         g.log.debug('EXITING TRY')
 
-        #return response.status_code
         return response.status_code
