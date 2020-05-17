@@ -111,6 +111,9 @@ class PreProc:
         result_file_list = XunitXML.get_file_list(results_file_dir)
         return_obj = {}
 
+        if len(result_file_list) < 2:
+            rportal.merge_launches = False
+
         # Loop through result files in drop directory
         responses = []
         for fqpath in result_file_list:

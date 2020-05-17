@@ -126,6 +126,11 @@ class ReportPortal:
         g.log.debug('ReportPortal.merge_launches: %s', self._merge_launches)
         return self._merge_launches
 
+    @merge_launches.setter
+    def merge_launches(self, merge_launches_value):
+        """Override merge_launches setting"""
+        self._merge_launches = merge_launches_value
+
     @property
     def launch_config(self):
         """launch_config attr gettr"""
