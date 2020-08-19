@@ -18,7 +18,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='rp-preproc',
-    version='0.1.3',
+    version='0.1.4',
     description=('REST API and client for pre-processing XML data before '
                  'import into ReportPortal'),
     url='https://github.com/loadtheaccumulator/rp-preproc',
