@@ -742,7 +742,7 @@ class Dashboard:
         """Check for existing dashboard by name
         superadmin_personal/filter?filter.eq.name=<name>
         """
-        api_path = 'dashboard/shared'
+        api_path = 'dashboard/shared?page.size=300'
         response = self._rportal.api_get(api_path)
         response_json = response.json()
         g.log.debug('GET DASHBOARD ID BY NAME: %s', response_json)
