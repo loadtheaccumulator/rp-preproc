@@ -37,6 +37,7 @@ def run(args):
         g.set_log_filename('glustolog', 'glustolog1', args.log_filepath)
 
     if args.debug:
+        print('ARGS DEBUG IS TRUE')
         g.set_log_level('glustolog', 'glustolog1', 'DEBUG')
 
     g.log.debug(args)

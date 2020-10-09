@@ -1,9 +1,9 @@
 {
   "rp_preproc" : {
-    "url": "http://example-rp-preproc.cloud.paas.psi.redhat.com/api/v1/process/xunit/"
+    "url": "http://example-rp-preproc.example.com/api/v1/process/xunit/"
   },
   "reportportal": {
-    "host_url": "https://example-rp.cloud.paas.psi.redhat.com",
+    "host_url": "https://example-rp.example.com",
     "api_token": "<USER_API_TOKEN>",
     "project": "<PROJECT>",
     "launch": {

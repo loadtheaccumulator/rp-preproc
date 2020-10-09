@@ -122,14 +122,14 @@ class TestSuite:
     def start(self):
         """Start a testsuite section in ReportPortal"""
         g.log.debug('Starting testsuite %s', self.name)
-        self.service.start_test_item(
+        self.item_id = self.service.start_test_item(
             name=self.name,
             start_time=str(int(time.time() * 1000)),
             item_type=self.item_type)
 
     def finish(self):
         """Finish a testsuite section in ReportPortal"""
-        self.service.finish_test_item(end_time=str(int(time.time() * 1000)),
+        self.service.finish_test_item(self.item_id, end_time=str(int(time.time() * 1000)),
                                       status=self.status)
         g.log.debug('Finished testsuite %s', self.name)
 
@@ -151,11 +151,13 @@ class TestCase:
 
     def start(self):
         """Start a testcase in ReportPortal"""
-        self.service.start_test_item(name=self.tc_name[:255],
+        self.test_item_id = self.service.start_test_item(name=self.tc_name[:255],
                                      description=self.description,
                                      tags=['testtag1'],
                                      start_time=str(int(time.time() * 1000)),
                                      item_type='STEP')
+
+        print(self.test_item_id)
 
         # Add system_out log.
         if self.testcase.get('system-out'):
@@ -197,7 +199,8 @@ class TestCase:
 
     def finish(self):
         """Finish a testcase in ReportPortal"""
-        self.service.finish_test_item(end_time=str(int(time.time() * 1000)),
+        self.service.finish_test_item(self.test_item_id,
+                                      end_time=str(int(time.time() * 1000)),
                                       status=self.status,
                                       issue=self.issue)
 

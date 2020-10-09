@@ -4,9 +4,9 @@
     "payload_dir": "resources/examples/payload_example_small"
   },
   "reportportal": {
-    "host_url": "https://rp-ea.cloud.paas.psi.redhat.com/",
-    "api_token": "2f466437-b13b-4a5c-9a50-d148e29ee8f1",
-    "project": "superadmin_personal",
+    "host_url": "https://web.demo.reportportal.io",
+    "api_token": "2ec1661d-782d-42af-aed8-d06af0274f71",
+    "project": "default_personal",
     "merge_launches": true,
     "simple_xml": false,
     "auto_dashboard": true,

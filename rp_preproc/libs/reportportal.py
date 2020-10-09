@@ -193,6 +193,7 @@ class ReportPortal:
         if filepath is None:
             session.headers["Content-type"] = "application/json"
             session.headers["Accept"] = "application/json"
+            print('API_POST(): ', json.dumps(post_data))
             response = session.post(url, data=json.dumps(post_data),
                                     verify=verify)
         else:
@@ -482,6 +483,27 @@ class Filter:
         self._id = None
         self._data_template = \
             {
+                "conditions": [
+                    {
+                        "condition": "eq",
+                        "filteringField": "name",
+                        "value": self._launch_name
+                    }
+                ],
+                "description": "RP PreProc Auto Filter",
+                "name": self._name,
+                "orders": [
+                    {
+                        "isAsc": False,
+                        "sortingColumn": "startTime"
+                    }
+                ],
+                "share": True,
+                "type": "launch"
+            }
+
+        self._data_template_old = \
+            {
                 "elements": [
                     {
                         "description": "RP PreProc Auto Filter",
@@ -539,14 +561,17 @@ class Filter:
                 g.log.debug('RETURNING EXISTING FILTER: %s', self._id)
                 return self._id
 
+        #print('TEMPLATE', self._data_template)
+
         api_path = 'filter'
         response = self._rportal.api_post(api_path,
                                           post_data=self._data_template)
 
         try:
             return_response = response.json()
+            #print('FILTER create()', return_response)
             g.log.debug('r.json: %s', return_response)
-            self._id = return_response[0]['id']
+            self._id = return_response['id']
             g.log.debug('filter_id: %s', self._id)
 
             return self._id
@@ -572,16 +597,19 @@ class Widget:
         self._data = None
 
     def get_id_by_name(self):
-        """Check for existing filter by name
+        """Check for existing widget by name
         superadmin_personal/filter?filter.eq.name=<name>
         """
+        print('----------------GET_ID_BY_NAME()')
         api_path = 'widget/shared/search'
         get_string = 'term={}'.format(self._name)
         response = self._rportal.api_get(api_path, get_data=[get_string])
         response_json = response.json()
+        print('GET WIDGET ID BY NAME: ', response_json)
         g.log.debug('GET WIDGET ID BY NAME: %s', response_json)
         if response_json['content']:
             response_widget = response_json['content'][0]
+            print('RESPONSE_WIDGET: ', response_widget)
             widget_id = response_widget['id']
             g.log.debug('RETURNING EXISTING WIDGET: %s', widget_id)
 
@@ -592,11 +620,12 @@ class Widget:
     def create(self, return_existing=True):
         """Create a Widget"""
 
+        print('----------------- WIDGET')
         g.log.debug('----------------- WIDGET')
 
         if return_existing:
             widget_id = self.get_id_by_name()
-
+            print('WIDGET_ID: ', widget_id)
             if widget_id is not None:
                 self._id = widget_id
                 return self._id
@@ -604,9 +633,10 @@ class Widget:
         g.log.debug('FILTER_ID: %s', self._filter_id)
 
         api_path = 'widget'
+        print('SELF._DATA: ', self._data)
         response = self._rportal.api_post(api_path,
                                           post_data=self._data)
-
+        print("WIDGET_RESPONSE", response.json())
         try:
             return_response = response.json()
             g.log.debug('r.json: %s', return_response)
@@ -634,6 +664,38 @@ class WidgetLaunchesTable(Widget):
         self._name = "{} Launches Table".format(self._launch_name)
         self._data = \
             {
+            "contentParameters": {
+                "contentFields": [
+                    "description",
+                    "endTime",
+                    "startTime",
+                    "user",
+                    "attributes",
+                    "statistics$defects$to_investigate$ti001",
+                    "statistics$defects$system_issue$si001",
+                    "statistics$defects$automation_bug$ab001",
+                    "statistics$defects$product_bug$pb001",
+                    "statistics$executions$skipped",
+                    "statistics$executions$failed",
+                    "statistics$executions$passed",
+                    "statistics$executions$total",
+                    "status",
+                    "number",
+                    "name"
+                ],
+                "itemsCount": 10,
+                "widgetOptions": {}
+            },
+            "description": "RP PreProc Auto widget",
+            "filterIds": [
+                self._filter_id
+            ],
+            "name": self._name,
+            "share": True,
+            "widgetType": "launchesTable"
+            }
+        self._data2 = \
+            {
                 "content_parameters": {
                     "content_fields": [
                         "name",
@@ -659,15 +721,16 @@ class WidgetLaunchesTable(Widget):
                     "metadata_fields": [
                         "start_time"
                     ],
-                    "type": "launches_table",
+                    "widgetType": "launches_table",
                     "widgetOptions": {
                         "filterName": [self._name]
                     }
                 },
                 "description": "RP PreProc Auto widget",
-                "filter_id": self._filter_id,
+                "filterIds": [self._filter_id],
                 "name": self._name,
-                "share": True
+                "share": True,
+                "widgetType": "launchesTable",
             }
 
 
@@ -678,6 +741,38 @@ class WidgetOverallStats(Widget):
 
         self._name = "{} Overall Stats".format(self._launch_name)
         self._data = \
+            {
+                "contentParameters": {
+                    "contentFields": [
+                        "statistics$executions$total",
+                        "statistics$executions$passed",
+                        "statistics$executions$failed",
+                        "statistics$executions$skipped",
+                        "statistics$defects$product_bug$PB001",
+                        "statistics$defects$automation_bug$AB001",
+                        "statistics$defects$system_issue$SI001",
+                        "statistics$defects$no_defect$ND001",
+                        "statistics$defects$to_investigate$TI001"
+                    ],
+                    "gadget": "overall_statistics",
+                    "itemsCount": 50,
+                    "metadata_fields": [
+                        "name",
+                        "number",
+                        "start_time"
+                    ],
+                    "widgetOptions": {
+                        "viewMode": ["donut"],
+                        "all": []
+                    }
+                },
+                "description": "RP PreProc Auto widget",
+                "filterIds": [self._filter_id],
+                "name": self._name,
+                "share": True,
+                "widgetType": "overallStatistics"
+            }
+        self._data2 = \
             {
                 "content_parameters": {
                     "content_fields": [
@@ -698,16 +793,17 @@ class WidgetOverallStats(Widget):
                         "number",
                         "start_time"
                     ],
-                    "type": "statistics_panel",
+                    "widgetType": "statistics_panel",
                     "widgetOptions": {
                         "viewMode": ["donut"],
                         "latest": []
                     }
                 },
                 "description": "RP PreProc Auto widget",
-                "filter_id": self._filter_id,
+                "filterIds": [self._filter_id],
                 "name": self._name,
-                "share": True
+                "share": True,
+                "widgetType": "overallStatistics"
             }
 
 
@@ -734,8 +830,9 @@ class Dashboard:
         """get dashboard url"""
         url = posixpath.join(self._rportal.endpoint, 'ui',
                              '#{}'.format(self._rportal.project),
-                             'dashboard', self._id)
+                             'dashboard', str(self._id))
 
+        #print('URL: ', url)
         return url
 
     def get_id_by_name(self):
@@ -799,21 +896,27 @@ class Dashboard:
 
     def add_widget(self, widget_id, size=6):
         """Add a widget to the dashboard"""
+
         widget_data = {
             "addWidget": {
+                "share": True,
                 "widgetId": widget_id,
-                "widgetPosition": [0],
-                "widgetSize": [size]
-            },
-            "description": "RP PreProc Auto Widget",
-            "name": self._name,
-            "share": True,
+                "widgetName": self._name,
+                "widgetPosition": {
+                    "positionX": 0,
+                    "positionY": 0
+                },
+                "widgetSize": {
+                    "height": 10,
+                    "width": 12
+                }
+            }
         }
 
         g.log.debug('WIDGET DATA: %s', widget_data)
         g.log.debug('BREAKPOINT 1')
 
-        api_path = 'dashboard/{}'.format(self._id)
+        api_path = 'dashboard/{}/add'.format(self._id)
         dashboard_info = self.get_info_by_id()
         widgets = dashboard_info.get('widgets', None)
         g.log.debug(widgets)
@@ -825,16 +928,17 @@ class Dashboard:
                 return None
 
         g.log.debug('DASHBOARD add_widget api_path %s', api_path)
+        g.log.debug('WIDGET DATA: %s', widget_data)
         response = self._rportal.api_put(api_path,
                                          put_data=widget_data)
         g.log.debug('ENTERING TRY')
         try:
             return_response = response.json()
             g.log.debug('r.json: %s', return_response)
-            filter_id = return_response.get('id', None)
-            g.log.debug('filter_id: %s', filter_id)
+            dashboard_id = return_response.get('id', None)
+            g.log.debug('dashboard_id: %s', dashboard_id)
 
-            return filter_id
+            return dashboard_id
         except json.JSONDecodeError:
             return_response = response.text
             g.log.error('r.text: %s', return_response)

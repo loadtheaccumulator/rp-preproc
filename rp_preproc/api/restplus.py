@@ -24,7 +24,7 @@ from rp_preproc import settings
 #         reviewed and disabled
 log = logging.getLogger(__name__)
 
-api = Api(version='0.1.4', title='ReportPortal PreProc API',
+api = Api(version='0.1.5', title='ReportPortal PreProc API',
           description=('A REST API to pre-process xUnit XML '
                        'for import into ReportPortal'))
 
